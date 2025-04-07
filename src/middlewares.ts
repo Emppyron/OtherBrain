@@ -12,6 +12,6 @@ export const userAuthMiddleware=(req: Request,res:Response,next:NextFunction)=>{
         });return;
      }
      //@ts-ignore
-     req.id=decoded.id;
+     req.userId=decoded.id;
      next(); 
 }

@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
-import { contentModel, userModel } from "./db";
+import { contentModel, tagModel, userModel } from "./db";
 import { JWT_SECRET } from "./secret-config";
 import { userAuthMiddleware } from "./middlewares";
 
@@ -57,7 +57,34 @@ app.post("/api/v1/content",userAuthMiddleware,async (req,res)=>{
      const link=req.body.link;
      const tags=req.body.tags;
      //@ts-ignore
-     const UserId=req.id;
+     const UserId=req.userId;
+      
+     //tags array handling 
+     // if new tag , then add that in tag database, or else 
+     // leave it as it is coz 
+     // tags would be required for vector embeddings in future 
+
+     for(let i=0;i<tags.length;i++){
+        const foundTag=await tagModel.findOne({title : tags[i]});
+        console.log("this is the found tag value ");
+        console.log(foundTag);
+        if(!foundTag){
+            console.log("entered here with "+tags[i]);
+            await tagModel.create({
+                title:tags[i]
+            })
+        }
+        const forsureTag=await tagModel.findOne({title:tags[i]});
+        //@ts-ignore
+        //@ts-ignore
+        tags[i]=forsureTag._id;
+        console.log("tag number "+ i);
+        //@ts-ignore
+        console.log(forsureTag.title);
+        console.log(tags[i]);
+     }
+    
+
      await contentModel.create({
         title : title,
         link : link,
@@ -70,11 +97,31 @@ app.post("/api/v1/content",userAuthMiddleware,async (req,res)=>{
      });
 
 })
-app.get("/api/v1/content",(req,res)=>{
+app.get("/api/v1/content",userAuthMiddleware,async (req,res)=>{
+    //@ts-ignore 
+    const userId=req.userId;
+     const content=await contentModel.find({
+        userId
+     }).populate("userId","username");
+     res.json({
+        content
+     })
+
     
 })
-app.delete("/api/v1/content",(req,res)=>{
+app.delete("/api/v1/content",userAuthMiddleware,async (req,res)=>{
     
+    const contentId=req.body.contentId;
+    //@ts-ignore
+    const userId=req.userId;
+    await contentModel.deleteMany({
+        _id : contentId,
+        userId: userId
+    })
+     
+    res.json({
+        msg:"deleted"
+    });
 })
 app.post("/api/v1/brain/share",(req,res)=>{
 
