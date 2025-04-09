@@ -1,9 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
-import { contentModel, tagModel, userModel } from "./db";
+import { contentModel, linkModel, tagModel, userModel } from "./db";
 import { JWT_SECRET } from "./secret-config";
 import { userAuthMiddleware } from "./middlewares";
+import { RandomHashForShare } from "./utils";
 
 const app= express();
 app.use(express.json());
@@ -66,10 +67,7 @@ app.post("/api/v1/content",userAuthMiddleware,async (req,res)=>{
 
      for(let i=0;i<tags.length;i++){
         const foundTag=await tagModel.findOne({title : tags[i]});
-        console.log("this is the found tag value ");
-        console.log(foundTag);
         if(!foundTag){
-            console.log("entered here with "+tags[i]);
             await tagModel.create({
                 title:tags[i]
             })
@@ -78,10 +76,8 @@ app.post("/api/v1/content",userAuthMiddleware,async (req,res)=>{
         //@ts-ignore
         //@ts-ignore
         tags[i]=forsureTag._id;
-        console.log("tag number "+ i);
+       
         //@ts-ignore
-        console.log(forsureTag.title);
-        console.log(tags[i]);
      }
     
 
@@ -123,10 +119,66 @@ app.delete("/api/v1/content",userAuthMiddleware,async (req,res)=>{
         msg:"deleted"
     });
 })
-app.post("/api/v1/brain/share",(req,res)=>{
+app.post("/api/v1/brain/share",userAuthMiddleware,async (req,res)=>{
+
+    const share =((req.body.share)=="true");
+    console.log(share);
+    //@ts-ignore
+    const userId=req.userId;
+    const hash=RandomHashForShare(10);
+    if(share){
+      const link=await linkModel.findOne({userId}); 
+      try{
+        await linkModel.create({
+           hash:hash,
+           userId:userId
+        });
+
+       }
+       catch(e){
+        res.json({
+            msg:"user already enabled share",
+            userLink:link?.hash,
+            error:e
+        });return;
+       }
+        
+    }
+    else{
+      await linkModel.deleteOne({
+          userId:userId
+      });
+    }
+    res.json({
+        msg:"share details updated",
+        Link:hash
+    });
 
 })
-app.get("/api/v1/brain/:shareLink",(req,res)=>{
+app.get("/api/v1/brain/:shareLink",async(req,res)=>{
+   const hashLink=req.params.shareLink;
+   const link=await linkModel.findOne({hash:hashLink});
+   console.log("link");
+   console.log(link);
+   if(!link){
+      res.json({
+        msg:"link not valid , ideally non ocuuring case in test"
+      });return;
+   }
+   const content=await contentModel.find({userId:link.userId});
+   const user=await userModel.findOne({_id:link.userId});
+   
+   if(!user){
+      res.json({
+        msg:"user not found !! code fatt gaya bc"
+      })
+   }
+   else{
+      res.json({
+        user:user.username,
+        content:content
+      });
+   }
 
 })
 

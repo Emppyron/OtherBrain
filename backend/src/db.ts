@@ -16,6 +16,12 @@ const ContentSchema=new Schema({
     userId:{type:mongoose.Types.ObjectId,ref:"users", required:true}
 })
 
+const LinkSchema=new Schema({
+    hash:String,
+    userId:{type:mongoose.Types.ObjectId,ref:"users", required:true,unique:true}
+})
+
+
 const TagSchema=new Schema({
     title:String
 })
@@ -24,3 +30,4 @@ const TagSchema=new Schema({
 export const userModel=model("users",UserSchema);
 export const contentModel=model("contents",ContentSchema);
 export const tagModel=model("tags",TagSchema);
+export const linkModel=model("links",LinkSchema);
