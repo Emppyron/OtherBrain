@@ -11,7 +11,7 @@ export interface ButtonProps{
 }
 
 const Variants={
-  "primary" : "bg-indigo-600 text-black",
+  "primary" : "bg-indigo-600 text-white",
   "secondary" : "bg-indigo-300 text-indigo-700"
 }
 const sizeStyles={
@@ -32,6 +32,3 @@ export const Button= (props : ButtonProps)=>{
     </button>);
 
 }
-
-<Button  variant="primary"  text="asd" size="md" onClick={()=>{}} >
-</Button>
