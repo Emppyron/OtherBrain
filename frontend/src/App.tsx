@@ -17,7 +17,8 @@ function App() {
       </Button>
       </div>
 
-      <Card/>
+      <Card type="youtube" link="https://www.youtube.com/watch?v=Q50jSglX0hA" title="project" description="aa"/>
+      <Card type="twitter" link="https://x.com/santi_lopezz99/status/1910354187797299494" title="project" description="bb"/>
 
     </>
   )
