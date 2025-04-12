@@ -30,7 +30,7 @@ export const Card=(props:CardProps)=>{
     }
 
    
-    return (<div className="border-gray-200 border-2 max-w-100 max-h-150 rounded-md m-1 bg-white">
+    return (<div className="border-gray-200 border-2 max-w-100 max-h-150 rounded-md ml-4 bg-white">
        <div className="flex justify-between   ">
             <div className="flex gap-2 items-center">
                <YoutubeIcon size="xl"/>

@@ -13,12 +13,15 @@ function App() {
   const [open , onOpen]=useState(false);
    
   return (
-    <>
+    <div className='grid grid-cols-10 gap-2'>
     
-      
+    <div className='col-span-2'> 
+      <SideBar/>
+    </div>
+    <div className='col-span-8'>  
       <div className='bg-gray-300'>
       <CreateContentModal open={open} onClose={()=>{onOpen(false)}}/>
-      <div className='flex flex-col'>
+      <div className='flex flex-col '>
       <div className='flex gap-4 justify-end'>
       <Button startIcon={<PlusIcon size="lg"></PlusIcon>} variant="primary" size="sm" text="Add Content" onClick={()=>{onOpen(true)}}>
       </Button>
@@ -26,7 +29,7 @@ function App() {
       </Button>
       </div >
       </div>
-      <div className="grid grid-cols-6 ">
+      <div className="grid grid-cols-6 mt-4">
        <div className="col-span-3 items-center">
         <Card  type="youtube" link="https://www.youtube.com/watch?v=Q50jSglX0hA" title="project" description="aa"/>  
        </div> 
@@ -49,8 +52,9 @@ function App() {
       
       </div>
     </div>
+    </div>
     
-    </>
+    </div>
   )
 }
 

@@ -1,6 +1,6 @@
 
 export const SideBar=()=>{
-    return (<div className="h-screen rounded-r bg-green-300 fixed left-0 top-0 w-72">
+    return (<div className="h-full  w-full rounded-r bg-gray-400">
              hi there 
     </div>)
 }
