@@ -30,7 +30,7 @@ export const Card=(props:CardProps)=>{
     }
 
    
-    return (<div className="border-gray-200 border-2 max-w-100 max-h-150 rounded-md m-6">
+    return (<div className="border-gray-200 border-2 max-w-100 max-h-150 rounded-md m-1 bg-white">
        <div className="flex justify-between   ">
             <div className="flex gap-2 items-center">
                <YoutubeIcon size="xl"/>
@@ -44,7 +44,7 @@ export const Card=(props:CardProps)=>{
        <div className="w-full pv-4">
        {  (props.type=="youtube") ? 
        
-       <iframe className="w-full p-2 min-h-[300px]" src={"https://www.youtube.com/embed/"+LinkId} 
+       <iframe className="w-full p-2 " src={"https://www.youtube.com/embed/"+LinkId} 
        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; 
        clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
