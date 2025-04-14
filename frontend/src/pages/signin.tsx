@@ -16,9 +16,12 @@ export function Signin(){
        const username=uRef.current.value;
        const password=pRef.current.value;
 
-       await axios.post(BACKEND_URL+"/api/v1/signin",{
+      const response= await axios.post(BACKEND_URL+"/api/v1/signin",{
           username,password
        });
+
+       const token=response.data.token;
+       localStorage.setItem("token",token);
        
        alert("You are Signed In");
        navigate("/dashboard");
