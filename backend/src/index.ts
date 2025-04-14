@@ -5,9 +5,11 @@ import { contentModel, linkModel, tagModel, userModel } from "./db";
 import { JWT_SECRET } from "./secret-config";
 import { userAuthMiddleware } from "./middlewares";
 import { RandomHashForShare } from "./utils";
+import cors from "cors";
 
 const app= express();
 app.use(express.json());
+app.use(cors());
 
 app.post("/api/v1/signup",async (req,res)=>{
     const username=req.body.username;

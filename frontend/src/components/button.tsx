@@ -7,7 +7,7 @@ export interface ButtonProps{
    startIcon?: ReactElement;
    text : string;
    endIcon?: ReactElement;
-   onClick : ()=>void;
+   onClick ?: ()=>void;
 }
 
 const Variants={
