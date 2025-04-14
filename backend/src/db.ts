@@ -12,7 +12,7 @@ const UserSchema=new Schema({
 const ContentSchema=new Schema({
     title:String,
     link:String,
-    tags:[{type:mongoose.Types.ObjectId, ref:"tags"}],
+    //tags:[{type:mongoose.Types.ObjectId, ref:"tags"}],
     userId:{type:mongoose.Types.ObjectId,ref:"users", required:true}
 })
 

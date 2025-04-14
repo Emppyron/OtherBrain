@@ -58,7 +58,7 @@ app.post("/api/v1/signin",async (req,res)=>{
 app.post("/api/v1/content",userAuthMiddleware,async (req,res)=>{
      const title=req.body.title;
      const link=req.body.link;
-     const tags=req.body.tags;
+     //const tags=req.body.tags;
      //@ts-ignore
      const UserId=req.userId;
       
@@ -67,26 +67,25 @@ app.post("/api/v1/content",userAuthMiddleware,async (req,res)=>{
      // leave it as it is coz 
      // tags would be required for vector embeddings in future 
 
-     for(let i=0;i<tags.length;i++){
-        const foundTag=await tagModel.findOne({title : tags[i]});
-        if(!foundTag){
-            await tagModel.create({
-                title:tags[i]
-            })
-        }
-        const forsureTag=await tagModel.findOne({title:tags[i]});
-        //@ts-ignore
-        //@ts-ignore
-        tags[i]=forsureTag._id;
+    //  for(let i=0;i<tags.length;i++){
+    //     const foundTag=await tagModel.findOne({title : tags[i]});
+    //     if(!foundTag){
+    //         await tagModel.create({
+    //             title:tags[i]
+    //         })
+    //     }
+    //     const forsureTag=await tagModel.findOne({title:tags[i]});
+    //     //@ts-ignore
+    //     //@ts-ignore
+    //     tags[i]=forsureTag._id;
        
-        //@ts-ignore
-     }
+    //     //@ts-ignore
+    //  }
     
 
      await contentModel.create({
         title : title,
         link : link,
-        tags: tags,
         userId:UserId
      })
      
