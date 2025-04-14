@@ -58,6 +58,8 @@ app.post("/api/v1/signin",async (req,res)=>{
 app.post("/api/v1/content",userAuthMiddleware,async (req,res)=>{
      const title=req.body.title;
      const link=req.body.link;
+     const type=req.body.type;
+     const description=req.body.description;
      //const tags=req.body.tags;
      //@ts-ignore
      const UserId=req.userId;
@@ -86,6 +88,8 @@ app.post("/api/v1/content",userAuthMiddleware,async (req,res)=>{
      await contentModel.create({
         title : title,
         link : link,
+        type : type,
+        description:description,
         userId:UserId
      })
      

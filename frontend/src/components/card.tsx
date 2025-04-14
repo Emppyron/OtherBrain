@@ -4,6 +4,7 @@ import { DeleteIcon } from "./Icons/deleteIcon";
 import { Tweet } from "react-tweet";
 import { extractTweetId } from "../functions/tweetId";
 import { extractYouTubeID } from "../functions/youtubeId";
+import { TwitterIcon } from "./Icons/twitterIcon";
 
 export interface CardProps{
    type:"youtube"|"twitter";
@@ -33,7 +34,7 @@ export const Card=(props:CardProps)=>{
     return (<div className="border-gray-200 border-2 max-w-100 max-h-150 rounded-md ml-4 bg-white">
        <div className="flex justify-between   ">
             <div className="flex gap-2 items-center">
-               <YoutubeIcon size="xl"/>
+              {(props.type=="youtube")? <YoutubeIcon size="xl"/>:<TwitterIcon size="xl"/>}
                <div>{props.title}</div>
             </div>
             <div className="flex gap-2 items-center">

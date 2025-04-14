@@ -31,13 +31,14 @@ export  function CreateContentModal({open,onClose}:{open : boolean,
       const description=descriptionRef.current.value;
       
       await axios.post(BACKEND_URL+"/api/v1/content",{
-          title,link,description
+          title,link,description,"type" : type
       },{
         headers:{
            "token":localStorage.getItem("token") 
         }
       });
       
+      alert("Content Added Successfully");
       navigate("/dashboard");
    }
 
@@ -65,3 +66,4 @@ export  function CreateContentModal({open,onClose}:{open : boolean,
   </div>);
 
 }
+
