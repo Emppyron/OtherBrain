@@ -17,16 +17,22 @@ function DashBoard() {
   const [open , onOpen]=useState(false);
   const contents=useContent();
 
+  
+
  // const [contents,setContents]=useState([]);
  //@ts-ignore
 
 //@ts-ignore
-console.log(contents);
-//@ts-ignore
- const finalData=contents.content.map(x=>{
-  <Card  type={x.type} link={x.link} title={x.title} description={x.description}/>
- })
 
+
+//@ts-ignore
+ const finalData : any[] =contents.map(x=>{
+  return (
+  <Card  type={x.type} link={x.link} title={x.title} description={x.description}/>
+  ) 
+})
+  console.log("before final ADta");
+  console.log(finalData);
 
  return (
   <div className='grid grid-cols-10 gap-2'>
@@ -49,8 +55,6 @@ console.log(contents);
      
      
       <div className="col-span-3 items-center">
-        {/* <Card  type={x.type} link={x.link} title={x.title} description={x.description}/>   */}
-        hi there!
         {finalData}
        </div>
     
