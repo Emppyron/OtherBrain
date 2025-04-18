@@ -11,13 +11,14 @@ import { SideBar } from '../components/sidebar';
 import axios from "axios";
 import { BACKEND_URL } from '../config';
 import { useContent } from '../hooks/getContentshook';
-
+import { ShareBrain } from '../components/shareBrainComp';
 
 function DashBoard() {
   
   const [open , onOpen]=useState(false);
   const [loading,setLoading]=useState(false);
   const contents=useContent({loading});
+  const [sbOpen,setSbOpen]=useState(false);
 
   function getCard(x : any){
     return (
@@ -44,12 +45,13 @@ function DashBoard() {
   </div>
   <div className='col-span-8'>  
     <div className='bg-gray-300'>
+    {sbOpen && <ShareBrain  sbClose={()=>{setSbOpen(false);}}/>}
     <CreateContentModal open={open} onClose={()=>{onOpen(false); setLoading((x)=>{return (!x);});}}/>
     <div className='flex flex-col '>
     <div className='flex gap-4 justify-end'>
     <Button startIcon={<PlusIcon size="lg"></PlusIcon>} variant="primary" size="sm" text="Add Content" onClick={()=>{onOpen(true)}}>
     </Button>
-    <Button startIcon={<ShareIcon size="lg"></ShareIcon>} variant="secondary" size="sm" text="Share Brain" onClick={()=>{}}>
+    <Button startIcon={<ShareIcon size="lg"></ShareIcon>} variant="secondary" size="sm" text="Share Brain" onClick={()=>{setSbOpen(true)}}>
     </Button>
     </div >
     </div>

@@ -131,7 +131,6 @@ app.delete("/api/v1/content",userAuthMiddleware,async (req,res)=>{
 app.post("/api/v1/brain/share",userAuthMiddleware,async (req,res)=>{
 
     const share =((req.body.share)=="true");
-    console.log(share);
     //@ts-ignore
     const userId=req.userId;
     const hash=RandomHashForShare(10);
@@ -147,7 +146,7 @@ app.post("/api/v1/brain/share",userAuthMiddleware,async (req,res)=>{
        catch(e){
         res.json({
             msg:"user already enabled share",
-            userLink:link?.hash,
+            Link:link?.hash,
             error:e
         });return;
        }
