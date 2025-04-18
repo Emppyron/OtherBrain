@@ -39,6 +39,7 @@ export  function CreateContentModal({open,onClose}:{open : boolean,
       });
       
       alert("Content Added Successfully");
+      onClose();
       navigate("/dashboard");
    }
 

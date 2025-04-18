@@ -38,7 +38,6 @@ export const Card=(props:CardProps)=>{
                <div>{props.title}</div>
             </div>
             <div className="flex gap-2 items-center">
-                 <ShareIcon size="lg"/>
                  <DeleteIcon size="lg"/>
             </div>
        </div>

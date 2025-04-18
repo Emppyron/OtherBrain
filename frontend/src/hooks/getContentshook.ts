@@ -2,12 +2,13 @@ import React,{ useState,useEffect } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 
-export const useContent=()=>{
+export const useContent=({ loading}:{
+    loading :boolean,
+})=>{
     const [data,setData]=useState<any[]>([]);
     
     useEffect(()=>{
-        console.log("inside useeffecrf")
-        console.log(data);
+        
         axios.get(BACKEND_URL+"/api/v1/content",{
             headers:{
                 "token": localStorage.getItem("token")
@@ -20,9 +21,9 @@ export const useContent=()=>{
         .catch((err) => {
             console.error("API error:", err);
           });
-    },[])
+    },[loading]);
     //@ts-ignore
-    console.log(data);
+   
     return data;
 }
 

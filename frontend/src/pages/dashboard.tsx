@@ -11,11 +11,13 @@ import { SideBar } from '../components/sidebar';
 import axios from "axios";
 import { BACKEND_URL } from '../config';
 import { useContent } from '../hooks/getContentshook';
+import { getCard } from '../functions/getCards';
 
 function DashBoard() {
   
   const [open , onOpen]=useState(false);
-  const contents=useContent();
+  const [loading,setLoading]=useState(false);
+  const contents=useContent({loading});
 
   
 
@@ -26,13 +28,13 @@ function DashBoard() {
 
 
 //@ts-ignore
- const finalData : any[] =contents.map(x=>{
-  return (
-  <Card  type={x.type} link={x.link} title={x.title} description={x.description}/>
-  ) 
-})
-  console.log("before final ADta");
-  console.log(finalData);
+ const finalData : any[] =contents.map(getCard)
+  
+ console.log("rerndering loading");
+ console.log(loading);
+ console.log(finalData);
+
+
 
  return (
   <div className='grid grid-cols-10 gap-2'>
@@ -42,7 +44,7 @@ function DashBoard() {
   </div>
   <div className='col-span-8'>  
     <div className='bg-gray-300'>
-    <CreateContentModal open={open} onClose={()=>{onOpen(false)}}/>
+    <CreateContentModal open={open} onClose={()=>{onOpen(false); setLoading((x)=>{return (!x);});}}/>
     <div className='flex flex-col '>
     <div className='flex gap-4 justify-end'>
     <Button startIcon={<PlusIcon size="lg"></PlusIcon>} variant="primary" size="sm" text="Add Content" onClick={()=>{onOpen(true)}}>
