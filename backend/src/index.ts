@@ -163,6 +163,26 @@ app.post("/api/v1/brain/share",userAuthMiddleware,async (req,res)=>{
     });
 
 })
+app.get("/api/v1/brain/share/info",userAuthMiddleware,async (req,res)=>{
+
+     //@ts-ignore
+     const userId=req.userId;
+    
+    
+     const link=await linkModel.findOne({userId}); 
+     if(!link){
+        res.json({
+         "created":false  
+        });
+     } 
+     else{
+       res.json({
+           "created":true,
+           "link":link.hash 
+       })
+     }
+
+})
 app.get("/api/v1/brain/:shareLink",async(req,res)=>{
    const hashLink=req.params.shareLink;
    const link=await linkModel.findOne({hash:hashLink});

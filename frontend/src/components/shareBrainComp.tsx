@@ -8,7 +8,8 @@ export const ShareBrain=({sbClose}:{
     sbClose:()=>void
 })=>{
 
-    const [enable, setEnable]=useState(true);
+    let enable = true;
+    const [se,sse]=useState(true);
     //@ts-ignore
     const shareLinkRef=useRef<any>();
     
@@ -21,7 +22,7 @@ export const ShareBrain=({sbClose}:{
             }
         })
         shareLinkRef.current=BACKEND_SHARE_URL+response.data.Link;
-        setEnable(false);
+        sse(false);enable=false;
     }
     async function disableShareLink(){
         const response=await axios.post(BACKEND_URL+"/api/v1/brain/share",{
@@ -32,10 +33,27 @@ export const ShareBrain=({sbClose}:{
             }
         })
         shareLinkRef.current="";
-        setEnable(true);
+        sse(true);enable=true;
     }
+    async function getInfo(){
+         const res= await axios.get(BACKEND_URL+"/api/v1/brain/share/info",{
+            headers:{
+                "token":localStorage.getItem("token")
+            }
+          });
+          console.log(res.data);
+          if(res.data.created){
+            enable=false;
+            shareLinkRef.current=BACKEND_SHARE_URL+res.data.link;
+          }
+          console.log("enable useref");
+         console.log(enable);
 
 
+    }
+  
+    
+   
     return ( <div className="h-screen w-screen bg-gray-400 opacity-80  fixed top-0 left-0 flex justify-center">
                 <div className="flex flex-col justify-center m-4">
                     
