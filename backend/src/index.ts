@@ -63,7 +63,8 @@ app.post("/api/v1/content",userAuthMiddleware,async (req,res)=>{
      //const tags=req.body.tags;
      //@ts-ignore
      const UserId=req.userId;
-      
+
+    
      //tags array handling 
      // if new tag , then add that in tag database, or else 
      // leave it as it is coz 
@@ -85,16 +86,16 @@ app.post("/api/v1/content",userAuthMiddleware,async (req,res)=>{
     //  }
     
 
-     await contentModel.create({
+     const rez=await contentModel.create({
         title : title,
         link : link,
         type : type,
         description:description,
         userId:UserId
-     })
+     });
      
      res.json({
-        msg:"content is added"
+        msg:"content is added",
      });
 
 })
@@ -113,8 +114,11 @@ app.get("/api/v1/content",userAuthMiddleware,async (req,res)=>{
 app.delete("/api/v1/content",userAuthMiddleware,async (req,res)=>{
     
     const contentId=req.body.contentId;
+    console.log("indeltee");
+    console.log(contentId);
     //@ts-ignore
     const userId=req.userId;
+    console.log(userId);
     await contentModel.deleteMany({
         _id : contentId,
         userId: userId

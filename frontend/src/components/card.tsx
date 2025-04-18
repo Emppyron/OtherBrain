@@ -5,18 +5,37 @@ import { Tweet } from "react-tweet";
 import { extractTweetId } from "../functions/tweetId";
 import { extractYouTubeID } from "../functions/youtubeId";
 import { TwitterIcon } from "./Icons/twitterIcon";
+import { useRef, useState } from "react";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 export interface CardProps{
    type:"youtube"|"twitter";
    link: string;
    description:string;
    title:string;
+   cardId:string;
+   reloadPage:()=>void;
 }
 
 
 
 export const Card=(props:CardProps)=>{
    
+   
+   //@ts-ignore
+   async function deleteCard(cardId:String){
+      await axios.delete(BACKEND_URL+"/api/v1/content",{
+         headers:{
+            "token":localStorage.getItem("token") 
+         },
+         data:{
+            "contentId" : cardId
+        }
+       });
+      
+      }
+
    function extractTweetId(url : String) {
       const match = url.match(/status\/(\d+)/);
       return match ? match[1] : undefined;
@@ -37,7 +56,7 @@ export const Card=(props:CardProps)=>{
               {(props.type=="youtube")? <YoutubeIcon size="xl"/>:<TwitterIcon size="xl"/>}
                <div>{props.title}</div>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-2 items-center" onClick={()=>{deleteCard(props.cardId);props.reloadPage();}}>
                  <DeleteIcon size="lg"/>
             </div>
        </div>
@@ -64,6 +83,7 @@ export const Card=(props:CardProps)=>{
        
        </div>
        <div className="w-full font-mono  font-bold text-md pl-10  items-center"> {props.description} </div>
+       {/* <div>{props.cardId}</div> */}
 
     </div>);
 

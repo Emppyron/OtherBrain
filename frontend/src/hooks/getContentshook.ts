@@ -14,8 +14,6 @@ export const useContent=({ loading}:{
                 "token": localStorage.getItem("token")
             }
         }).then((res)=>{
-            console.log("after then call");
-            console.log(res.data.content);
             setData(res.data.content);
         })
         .catch((err) => {

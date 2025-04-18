@@ -30,14 +30,14 @@ export  function CreateContentModal({open,onClose}:{open : boolean,
       const link=linkRef.current.value;
       const description=descriptionRef.current.value;
       
-      await axios.post(BACKEND_URL+"/api/v1/content",{
+      const rez=await axios.post(BACKEND_URL+"/api/v1/content",{
           title,link,description,"type" : type
       },{
         headers:{
            "token":localStorage.getItem("token") 
         }
       });
-      
+       
       alert("Content Added Successfully");
       onClose();
       navigate("/dashboard");

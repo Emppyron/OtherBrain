@@ -11,7 +11,7 @@ import { SideBar } from '../components/sidebar';
 import axios from "axios";
 import { BACKEND_URL } from '../config';
 import { useContent } from '../hooks/getContentshook';
-import { getCard } from '../functions/getCards';
+
 
 function DashBoard() {
   
@@ -19,7 +19,11 @@ function DashBoard() {
   const [loading,setLoading]=useState(false);
   const contents=useContent({loading});
 
-  
+  function getCard(x : any){
+    return (
+      <Card  type={x.type} link={x.link} title={x.title} description={x.description} cardId={x._id} reloadPage={()=>{setLoading(x=>(!x))}}/>
+      ) ;
+}
 
  // const [contents,setContents]=useState([]);
  //@ts-ignore
@@ -30,11 +34,7 @@ function DashBoard() {
 //@ts-ignore
  const finalData : any[] =contents.map(getCard)
   
- console.log("rerndering loading");
- console.log(loading);
- console.log(finalData);
-
-
+ 
 
  return (
   <div className='grid grid-cols-10 gap-2'>
