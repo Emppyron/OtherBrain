@@ -63,9 +63,9 @@ export const ShareBrain=({sbClose}:{
                             </div>
                            <div className="flex flex-col items-center"> 
                            here is the share link !
-                           {enable && <Button text="enable Share" size="md" variant={"primary"} onClick={getShareLink}/>}
-                           {!enable && <div>{shareLinkRef.current}</div>}
-                           {!enable && <Button text="disable Share" size="md" variant={"primary"} onClick={disableShareLink}/> }
+                           {se && <Button text="enable Share" size="md" variant={"primary"} onClick={getShareLink}/>}
+                           {!se && <div>{shareLinkRef.current}</div>}
+                           {!se && <Button text="disable Share" size="md" variant={"primary"} onClick={disableShareLink}/> }
                            </div>
                     </div> 
                 </div>          
