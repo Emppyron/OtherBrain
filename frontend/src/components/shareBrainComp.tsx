@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Button } from "./button";
 import axios from "axios";
-import { BACKEND_SHARE_URL, BACKEND_URL } from "../config";
+import { BACKEND_SHARE_URL, BACKEND_URL, FRONTEND_URL } from "../config";
 import { CrossIcon } from "./Icons/crossIcon";
 
 export const ShareBrain=({sbClose}:{
@@ -21,7 +21,7 @@ export const ShareBrain=({sbClose}:{
                 "token":localStorage.getItem("token")
             }
         })
-        shareLinkRef.current=BACKEND_SHARE_URL+response.data.Link;
+        shareLinkRef.current=FRONTEND_URL+response.data.Link;
         sse(false);enable=false;
     }
     async function disableShareLink(){
@@ -35,23 +35,7 @@ export const ShareBrain=({sbClose}:{
         shareLinkRef.current="";
         sse(true);enable=true;
     }
-    async function getInfo(){
-         const res= await axios.get(BACKEND_URL+"/api/v1/brain/share/info",{
-            headers:{
-                "token":localStorage.getItem("token")
-            }
-          });
-          console.log(res.data);
-          if(res.data.created){
-            enable=false;
-            shareLinkRef.current=BACKEND_SHARE_URL+res.data.link;
-          }
-          console.log("enable useref");
-         console.log(enable);
-
-
-    }
-  
+    
     
    
     return ( <div className="h-screen w-screen bg-gray-400 opacity-80  fixed top-0 left-0 flex justify-center">

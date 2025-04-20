@@ -15,28 +15,39 @@ import { BACKEND_URL } from '../config';
 import { useContent } from '../hooks/getContentshook';
 import { ShareBrain } from '../components/shareBrainComp';
 import { DisplayCard } from '../components/displayCard';
+import { useParams } from 'react-router-dom';
 
-function SharedBrain({ contents,username }:{
-  contents:[],
-  username:string
-}) {
+function SharedBrain() {
   
   
-  function getCard(x : any){
+  const { userLink }=useParams();
+  console.log(userLink);
+
+  function getDisplayCard(x : any){
     return (
         
       <DisplayCard  type={x.type} link={x.link} title={x.title} description={x.description}/>
       ) ;
 }
-
- // const [contents,setContents]=useState([]);
+  
+  const [contents,setContents]=useState([]);
+  const [username,setUsername]=useState("");
  //@ts-ignore
+ useEffect(async ()=>{
+  const res= await axios.get(`${BACKEND_URL}/api/v1/brain/${userLink}`);
+  console.log("inside use effect");
+  console.log(res.data);
+  setContents(res.data.content);
+  setUsername(res.data.user);
+ },[])
+
+ console.log(contents);
 
 //@ts-ignore
-
+ ;
 
 //@ts-ignore
- const finalData : any[] =contents.map(getCard)
+ const finalData : any[] =contents.map(getDisplayCard)
   
  
 
@@ -50,7 +61,7 @@ function SharedBrain({ contents,username }:{
     <div className='bg-gray-300'>
      <h1 className='p-4'>{username}</h1>
     <div className="grid grid-cols-6 mt-4">
-     
+       
      
       <div className="col-span-3 items-center">
         {finalData}
