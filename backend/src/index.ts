@@ -6,6 +6,8 @@ import { JWT_SECRET } from "./secret-config";
 import { userAuthMiddleware } from "./middlewares";
 import { RandomHashForShare } from "./utils";
 import cors from "cors";
+import { generateEmbedding } from "./generate-embeddings";
+import { getTopResults } from "./compare-embeddings";
 
 const app= express();
 app.use(express.json());
@@ -85,13 +87,22 @@ app.post("/api/v1/content",userAuthMiddleware,async (req,res)=>{
     //     //@ts-ignore
     //  }
     
+    let embed:number[]=[];
+    
+    try{
+    embed= await generateEmbedding(`${title} ${description}`); 
+    }
+    catch(e){
+        console.log("embeddings not generated for this content error ");
+    }
 
      const rez=await contentModel.create({
         title : title,
         link : link,
         type : type,
         description:description,
-        userId:UserId
+        userId:UserId,
+        embedding:embed
      });
      
      res.json({
@@ -209,5 +220,30 @@ app.get("/api/v1/brain/:shareLink",async(req,res)=>{
    }
 
 })
+app.get('/api/v1/query',userAuthMiddleware,async (req,res)=>{
+  
+   try{ 
+    const query=req.body.query;
+    //@ts-ignore
+    const userId=req.userId;
+    const allContents=await contentModel.find({
+        userId:userId
+    });
+    const queryEmbedding=await generateEmbedding(query);
+    const results=getTopResults(queryEmbedding,allContents);
+
+    res.json({
+        results
+    });
+  }
+  catch(e){
+    res.json({
+        results : "unknown error occured in search",
+    });
+  }
+
+})
+
+
 
 app.listen(3000);

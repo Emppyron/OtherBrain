@@ -1,1 +1,1 @@
-{"root":["./src/db.ts","./src/index.ts","./src/middlewares.ts","./src/secret-config.ts","./src/utils.ts"],"version":"5.8.3"}
+{"root":["./src/compare-embeddings.ts","./src/db.ts","./src/generate-embeddings.ts","./src/index.ts","./src/middlewares.ts","./src/secret-config.ts","./src/utils.ts"],"version":"5.8.3"}

@@ -15,7 +15,8 @@ const ContentSchema=new Schema({
     description:String,
     type:String,
     //tags:[{type:mongoose.Types.ObjectId, ref:"tags"}],
-    userId:{type:mongoose.Types.ObjectId,ref:"users", required:true}
+    userId:{type:mongoose.Types.ObjectId,ref:"users", required:true},
+    embedding:{type: [Number],default:[]}
 })
 
 const LinkSchema=new Schema({
